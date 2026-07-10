@@ -1,4 +1,6 @@
+using Domain.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +34,8 @@ public static class DependencyInjection
             );
         }
         // Add other infrastructure services here, e.g., repositories,etc. later
+        services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+        services.AddScoped<IPlayerRepository, PlayerRepository>();
 
         return services;
     }
