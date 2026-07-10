@@ -9,7 +9,7 @@ public class Player : AuditableEntity
 
     public string Name { get; set; } = string.Empty;
 
-    public Nationality Nationality { get; set; }
+    public Country Nationality { get; set; }
 
     public int Age { get; set; }
 

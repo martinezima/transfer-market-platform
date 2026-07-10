@@ -1,6 +1,6 @@
 namespace TransferMarketPlatform.Domain.Enums;
 
-public enum Nationality
+public enum Country
 {
     Argentina,
     Brazil,
