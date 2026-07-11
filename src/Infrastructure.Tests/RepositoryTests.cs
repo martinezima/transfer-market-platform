@@ -35,9 +35,9 @@ public class RepositoryTests
         var repository = new Repository<Player, int>(context);
         var player = CreatePlayer(1, "Alice", Country.Brazil);
 
-        await repository.CreateAsync(player);
+        await repository.Create(player);
 
-        var result = await repository.GetByIdAsync(1);
+        var result = await repository.GetById(1);
 
         Assert.NotNull(result);
         Assert.Equal(player.Name, result!.Name);
@@ -49,7 +49,7 @@ public class RepositoryTests
         await using var context = CreateContext($"repo_missing_{Guid.NewGuid()}");
         var repository = new Repository<Player, int>(context);
 
-        var result = await repository.GetByIdAsync(999);
+        var result = await repository.GetById(999);
 
         Assert.Null(result);
     }
@@ -60,8 +60,8 @@ public class RepositoryTests
         await using var context = CreateContext($"repo_query_{Guid.NewGuid()}");
         var repository = new Repository<Player, int>(context);
 
-        await repository.CreateAsync(CreatePlayer(1, "Alice", Country.Argentina));
-        await repository.CreateAsync(CreatePlayer(2, "Bob", Country.France));
+        await repository.Create(CreatePlayer(1, "Alice", Country.Argentina));
+        await repository.Create(CreatePlayer(2, "Bob", Country.France));
 
         var result = await repository.GetQuery().ToListAsync();
 
@@ -77,7 +77,7 @@ public class RepositoryTests
         var repository = new Repository<Player, int>(context);
         var player = CreatePlayer(0, "Charlie", Country.Spain);
 
-        var created = await repository.CreateAsync(player);
+        var created = await repository.Create(player);
 
         Assert.True(created.Id > 0);
         Assert.Equal(1, await context.Players.CountAsync());
@@ -88,10 +88,10 @@ public class RepositoryTests
     {
         await using var context = CreateContext($"repo_update_{Guid.NewGuid()}");
         var repository = new Repository<Player, int>(context);
-        var player = await repository.CreateAsync(CreatePlayer(1, "Diana", Country.Germany));
+        var player = await repository.Create(CreatePlayer(1, "Diana", Country.Germany));
 
         player.Name = "Diana Updated";
-        await repository.UpdateAsync(player);
+        await repository.Update(player);
 
         var updated = await context.Players.FindAsync(player.Id);
 
@@ -104,12 +104,12 @@ public class RepositoryTests
     {
         await using var context = CreateContext($"repo_delete_{Guid.NewGuid()}");
         var repository = new Repository<Player, int>(context);
-        var player = await repository.CreateAsync(CreatePlayer(1, "Eve", Country.Italy));
+        var player = await repository.Create(CreatePlayer(1, "Eve", Country.Italy));
 
-        var deleted = await repository.DeleteAsync(player.Id);
+        var deleted = await repository.Delete(player.Id);
 
         Assert.True(deleted);
-        Assert.Null(await repository.GetByIdAsync(player.Id));
+        Assert.Null(await repository.GetById(player.Id));
     }
 
     [Fact]
@@ -118,8 +118,42 @@ public class RepositoryTests
         await using var context = CreateContext($"repo_delete_missing_{Guid.NewGuid()}");
         var repository = new Repository<Player, int>(context);
 
-        var deleted = await repository.DeleteAsync(404);
+        var deleted = await repository.Delete(404);
 
         Assert.False(deleted);
+    }
+
+    [Fact]
+    public async Task BulkDeleteByIds_DeletesSpecifiedEntitiesAndReturnsDeletedCount()
+    {
+        await using var context = CreateContext($"repo_bulkdelete_{Guid.NewGuid()}");
+        var repository = new Repository<Player, int>(context);
+
+        await repository.Create(CreatePlayer(1, "A", Country.Argentina));
+        await repository.Create(CreatePlayer(2, "B", Country.France));
+        await repository.Create(CreatePlayer(3, "C", Country.Brazil));
+
+        var deletedCount = await repository.BulkDeleteByIds(new[] { 1, 3 });
+
+        Assert.Equal(2, deletedCount);
+        Assert.Null(await repository.GetById(1));
+        Assert.Null(await repository.GetById(3));
+        Assert.NotNull(await repository.GetById(2));
+        Assert.Equal(1, await context.Players.CountAsync());
+    }
+
+    [Fact]
+    public async Task BulkDeleteByIds_ReturnsZero_WhenNoIdsMatch()
+    {
+        await using var context = CreateContext($"repo_bulkdelete_none_{Guid.NewGuid()}");
+        var repository = new Repository<Player, int>(context);
+
+        await repository.Create(CreatePlayer(1, "A", Country.Germany));
+        await repository.Create(CreatePlayer(2, "B", Country.Italy));
+
+        var deletedCount = await repository.BulkDeleteByIds(new[] { 999, 1000 });
+
+        Assert.Equal(0, deletedCount);
+        Assert.Equal(2, await context.Players.CountAsync());
     }
 }

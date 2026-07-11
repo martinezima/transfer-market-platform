@@ -109,6 +109,7 @@ public class BulkDeletePlayerValidator : AbstractValidator<BulkDeletePlayerDto>
     {
         RuleFor(x => x.PlayerIds)
             .NotEmpty()
+            .NotNull()
             .WithMessage("Player IDs are required for bulk deletion")
             .Must(ids => ids.All(id => id > 0))
             .WithMessage("All player IDs must be greater than 0")

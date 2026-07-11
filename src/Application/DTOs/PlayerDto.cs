@@ -8,11 +8,11 @@ public class PlayerDto
 
     public string Name { get; set; } = string.Empty;
 
-    public Country Nationality { get; set; }
+    public string? Nationality { get; set; }
 
     public int Age { get; set; }
 
     public string CurrentClub { get; set; } = string.Empty;
 
-    public decimal TransferCost { get; set; }
+    public string? TransferCost { get; set; }
 }
