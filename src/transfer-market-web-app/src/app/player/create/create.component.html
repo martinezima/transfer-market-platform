@@ -1,0 +1,66 @@
+<div class="container">
+  <legend>Player Creation</legend>
+  <form>
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="txtName"
+        name="name"
+        [(ngModel)]="player.name" />
+    </div>
+    <div class="mb-3">
+      <label for="nationality" class="form-label">Nationality</label>
+      <select
+        class="form-select"
+        id="txtNationality"
+        name="nationality"
+        [(ngModel)]="selectedNationalityId"
+        (ngModelChange)="onNationalityChange()"
+        required>
+        <option value="0" disabled selected>Select a nationality</option>
+        <option
+          *ngFor="let nationality of nationalities"
+          [value]="nationality.id">
+          {{ nationality.countryName }}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="age" class="form-label">Age</label>
+      <input
+        type="number"
+        class="form-control"
+        id="txtAge"
+        name="age"
+        [(ngModel)]="player.age" />
+    </div>
+    <div class="mb-3">
+      <label for="currentClub" class="form-label">Current Club</label>
+      <input
+        type="text"
+        class="form-control"
+        id="txtCurrentClub"
+        name="currentClub"
+        [(ngModel)]="player.currentClub" />
+    </div>
+    <div class="mb-3">
+      <label for="transferCost" class="form-label">Transfer Cost</label>
+      <input
+        type="number"
+        class="form-control"
+        id="txtTransferCost"
+        name="transferCost"
+        [(ngModel)]="player.transferCost" />
+    </div>
+    <button type="button" class="btn btn-primary" (click)="onSubmit()">
+      Create
+    </button>
+  </form>
+  <!-- Optional: Display errors -->
+  <div class="mt-3 p-3 border rounded" *ngIf="errorsResponse?.ok === false">
+    <h5>Response errors:</h5>
+    <pre>{{ errorsResponse | json }}</pre>
+  </div>
+</div>
