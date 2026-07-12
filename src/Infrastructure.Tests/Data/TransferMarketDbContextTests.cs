@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TransferMarketPlatform.Domain.Entities;
-using TransferMarketPlatform.Infrastructure.Data;
 
-namespace TransferMarketPlatform.Infrastructure.Tests;
+namespace TransferMarketPlatform.Infrastructure.Data.Tests;
 
 public class TransferMarketDbContextTests
 {
