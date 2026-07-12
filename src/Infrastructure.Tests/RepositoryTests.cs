@@ -120,9 +120,9 @@ public class RepositoryTests
     public async Task DeleteAsync_ReturnsFalse_WhenEntityDoesNotExist()
     {
         await using var context = CreateContext($"repo_delete_missing_{Guid.NewGuid()}");
-        var repository = new Repository<Player, int>(context);
+        var repository = new Repository<Player, Guid>(context);
 
-        var deleted = await repository.Delete(404);
+        var deleted = await repository.Delete(Guid.NewGuid());
 
         Assert.False(deleted);
     }

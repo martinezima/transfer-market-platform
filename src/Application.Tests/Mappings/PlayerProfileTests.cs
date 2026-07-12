@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.Extensions.Logging.Abstractions;
 using TransferMarketPlatform.Application.DTOs;
 using TransferMarketPlatform.Application.Mappings;
 using TransferMarketPlatform.Domain.Entities;
@@ -11,13 +10,10 @@ public class PlayerProfileTests
 {
     private static IMapper CreateMapper()
     {
-        var configuration = new MapperConfiguration(
-            cfg =>
-            {
-                cfg.AddProfile<PlayerProfile>();
-            },
-            NullLoggerFactory.Instance
-        );
+        var configuration = new MapperConfiguration(cfg =>
+        {
+            cfg.AddProfile<PlayerProfile>();
+        });
         configuration.AssertConfigurationIsValid();
         return configuration.CreateMapper();
     }
