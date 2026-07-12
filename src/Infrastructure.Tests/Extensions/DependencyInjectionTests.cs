@@ -5,7 +5,7 @@ using TransferMarketPlatform.Domain.Entities;
 using TransferMarketPlatform.Infrastructure.Data;
 using TransferMarketPlatform.Infrastructure.Repositories;
 
-namespace TransferMarketPlatform.Infrastructure.Tests;
+namespace TransferMarketPlatform.Infrastructure.Tests.Extensions;
 
 public class DependencyInjectionTests
 {
