@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using TransferMarketPlatform.Domain.Entities;
 using TransferMarketPlatform.Domain.Enums;
 
-public class PlayerRepository : Repository<Player, int>, IPlayerRepository
+public class PlayerRepository : Repository<Player, Guid>, IPlayerRepository
 {
     public PlayerRepository(TransferMarketDbContext context)
         : base(context) { }

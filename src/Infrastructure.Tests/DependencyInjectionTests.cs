@@ -30,13 +30,13 @@ public class DependencyInjectionTests
 
         var dbContext = provider.GetService<TransferMarketDbContext>();
         var playerRepository = provider.GetService<IPlayerRepository>();
-        var genericRepository = provider.GetService<IRepository<Player, int>>();
+        var genericRepository = provider.GetService<IRepository<Player, Guid>>();
 
         Assert.NotNull(dbContext);
         Assert.NotNull(playerRepository);
         Assert.NotNull(genericRepository);
         Assert.IsType<PlayerRepository>(playerRepository);
-        Assert.IsType<Repository<Player, int>>(genericRepository);
+        Assert.IsType<Repository<Player, Guid>>(genericRepository);
     }
 
     [Fact]

@@ -3,7 +3,7 @@ using TransferMarketPlatform.Domain.Enums;
 
 namespace Domain.Interfaces;
 
-public interface IPlayerRepository : IRepository<Player, int>
+public interface IPlayerRepository : IRepository<Player, Guid>
 {
     Task<IEnumerable<Player>> GetPlayersByCountries(IEnumerable<Country> countries);
 }

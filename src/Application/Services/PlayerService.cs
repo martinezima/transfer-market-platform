@@ -38,7 +38,7 @@ public class PlayerService : IPlayerService
     }
 
     public async Task<PlayerDto?> GetByIdAsync(
-        int id,
+        Guid id,
         CancellationToken cancellationToken = default
     )
     {
@@ -71,7 +71,7 @@ public class PlayerService : IPlayerService
     }
 
     public async Task<PlayerDto?> UpdateAsync(
-        int id,
+        Guid id,
         UpdatePlayerDto playerDto,
         CancellationToken cancellationToken = default
     )
@@ -101,11 +101,11 @@ public class PlayerService : IPlayerService
         return _mapper.Map<Player, PlayerDto>(updatedPlayer);
     }
 
-    public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         // Validate the ID using the BulkDeletePlayerValidator
         var validationResult = await _deletePlayerValidator.ValidateAsync(
-            new BulkDeletePlayerDto { PlayerIds = new List<int> { id } },
+            new BulkDeletePlayerDto { PlayerIds = new List<Guid> { id } },
             cancellationToken
         );
         if (!validationResult.IsValid)
@@ -119,7 +119,7 @@ public class PlayerService : IPlayerService
     }
 
     public async Task<bool> BulkDeleteAsync(
-        IEnumerable<int> ids,
+        IEnumerable<Guid> ids,
         CancellationToken cancellationToken = default
     )
     {

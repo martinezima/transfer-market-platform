@@ -27,7 +27,7 @@ public class PlayerProfileTests
     {
         var mapper = CreateMapper();
         var player = new Player(
-            1,
+            Guid.NewGuid(),
             "Cristiano Ronaldo",
             Country.Portugal,
             39,

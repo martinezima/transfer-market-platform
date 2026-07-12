@@ -6,7 +6,7 @@ public interface IPlayerService
 {
     Task<IEnumerable<PlayerDto>> GetAllAsync(CancellationToken cancellationToken = default);
 
-    Task<PlayerDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    Task<PlayerDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
     Task<PlayerDto> CreateAsync(
         CreatePlayerDto playerDto,
@@ -14,11 +14,14 @@ public interface IPlayerService
     );
 
     Task<PlayerDto?> UpdateAsync(
-        int id,
+        Guid id,
         UpdatePlayerDto playerDto,
         CancellationToken cancellationToken = default
     );
 
-    Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
-    Task<bool> BulkDeleteAsync(IEnumerable<int> ids, CancellationToken cancellationToken = default);
+    Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<bool> BulkDeleteAsync(
+        IEnumerable<Guid> ids,
+        CancellationToken cancellationToken = default
+    );
 }
