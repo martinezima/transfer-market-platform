@@ -3,6 +3,8 @@ using TransferMarketPlatform.Application.Interfaces;
 using TransferMarketPlatform.Application.Mappings;
 using TransferMarketPlatform.Application.Services;
 using TransferMarketPlatform.Application.Validators;
+using TransferMarketPlatform.Infrastructure.Data;
+using TransferMarketPlatform.Infrastructure.Data.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,14 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    using var scope = app.Services.CreateScope();
+    if (File.Exists("transferMarketDemo.db"))
+    {
+        File.Delete("transferMarketDemo.db");
+    }
+    var context = scope.ServiceProvider.GetRequiredService<TransferMarketDbContext>();
+    await context.Database.EnsureCreatedAsync();
+    await DatabaseSeeder.SeedPlayers(context);
 }
 
 app.UseHttpsRedirection();

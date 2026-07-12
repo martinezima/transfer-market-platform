@@ -1,9 +1,9 @@
 using Domain.Interfaces;
-using Infrastructure.Data;
-using Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TransferMarketPlatform.Domain.Entities;
+using TransferMarketPlatform.Infrastructure.Data;
+using TransferMarketPlatform.Infrastructure.Repositories;
 
 namespace TransferMarketPlatform.Infrastructure.Tests;
 

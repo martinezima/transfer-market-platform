@@ -1,9 +1,9 @@
 using System.Linq.Expressions;
 using Domain.Interfaces;
-using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using TransferMarketPlatform.Infrastructure.Data;
 
-namespace Infrastructure.Repositories;
+namespace TransferMarketPlatform.Infrastructure.Repositories;
 
 public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     where TEntity : class

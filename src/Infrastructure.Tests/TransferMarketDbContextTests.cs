@@ -1,6 +1,6 @@
-using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using TransferMarketPlatform.Domain.Entities;
+using TransferMarketPlatform.Infrastructure.Data;
 
 namespace TransferMarketPlatform.Infrastructure.Tests;
 

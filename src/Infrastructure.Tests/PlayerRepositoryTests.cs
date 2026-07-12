@@ -1,8 +1,8 @@
-using Infrastructure.Data;
-using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using TransferMarketPlatform.Domain.Entities;
 using TransferMarketPlatform.Domain.Enums;
+using TransferMarketPlatform.Infrastructure.Data;
+using TransferMarketPlatform.Infrastructure.Repositories;
 
 namespace TransferMarketPlatform.Infrastructure.Tests;
 
