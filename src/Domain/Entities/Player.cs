@@ -8,6 +8,7 @@ public class Player : AuditableEntity
     public Player() { }
 
     public Player(
+        int id,
         string? name,
         Country nationality,
         int age,
@@ -15,6 +16,7 @@ public class Player : AuditableEntity
         decimal transferCost
     )
     {
+        Id = id;
         Name = name ?? string.Empty;
         Nationality = nationality;
         Age = age;
@@ -24,13 +26,13 @@ public class Player : AuditableEntity
 
     public int Id { get; set; }
 
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
 
     public Country Nationality { get; set; }
 
     public int Age { get; set; }
 
-    public string CurrentClub { get; set; } = string.Empty;
+    public string? CurrentClub { get; set; }
 
     public decimal TransferCost { get; set; }
 }

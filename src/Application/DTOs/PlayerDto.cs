@@ -6,13 +6,13 @@ public class PlayerDto
 {
     public int Id { get; set; }
 
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
 
-    public string? Nationality { get; set; }
+    public string? NationalityDisplayName { get; set; }
 
     public int Age { get; set; }
 
-    public string CurrentClub { get; set; } = string.Empty;
+    public string? CurrentClub { get; set; }
 
-    public string? TransferCost { get; set; }
+    public string TransferCostDisplay { get; set; } = string.Empty;
 }
