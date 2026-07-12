@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>Player List</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Nationality</th>
+        <th scope="col">Age</th>
+        <th scope="col">Current Club</th>
+        <th scope="col">Transfer Cost</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let player of players">
+        <td scope="row">{{ player.name }}</td>
+        <td scope="row">{{ player.nationalityDisplayName }}</td>
+        <td scope="row">{{ player.age }}</td>
+        <td scope="row">{{ player.currentClub }}</td>
+        <td scope="row">{{ player.transferCostDisplay }}</td>
+        <td>
+          <a
+            href=""
+            class="btn btn-primary"
+            [routerLink]="['/player/edit', player.id]"
+            >Edit</a
+          >
+        </td>
+        <td>
+          <a href="" class="btn btn-danger" (click)="deletePlayer(player.id)"
+            >Delete</a
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
