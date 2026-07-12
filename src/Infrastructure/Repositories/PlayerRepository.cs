@@ -1,9 +1,10 @@
 using Domain.Interfaces;
-using Infrastructure.Data;
-using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using TransferMarketPlatform.Domain.Entities;
 using TransferMarketPlatform.Domain.Enums;
+using TransferMarketPlatform.Infrastructure.Data;
+
+namespace TransferMarketPlatform.Infrastructure.Repositories;
 
 public class PlayerRepository : Repository<Player, Guid>, IPlayerRepository
 {
