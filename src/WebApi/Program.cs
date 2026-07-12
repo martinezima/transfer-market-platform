@@ -1,4 +1,5 @@
 using FluentValidation;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using TransferMarketPlatform.Application.Interfaces;
 using TransferMarketPlatform.Application.Mappings;
 using TransferMarketPlatform.Application.Services;
@@ -9,8 +10,12 @@ using TransferMarketPlatform.Infrastructure.Data.Seed;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-// builder.Services.AddOpenApi();
+builder.Services.AddOpenApi();
 
 // Register FluentValidation validators from the assembly containing CreatePlayerValidator
 builder.Services.AddValidatorsFromAssembly(typeof(CreatePlayerValidator).Assembly);
@@ -29,7 +34,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    // app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
     using var scope = app.Services.CreateScope();
     if (File.Exists("transferMarketDemo.db"))
     {
@@ -41,5 +48,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.MapControllers();
 app.Run();
