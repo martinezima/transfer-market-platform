@@ -9,6 +9,18 @@ using TransferMarketPlatform.Infrastructure.Data.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// CORS Policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        "AllowAnyOrigin",
+        policy =>
+        {
+            policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        }
+    );
+});
+
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
