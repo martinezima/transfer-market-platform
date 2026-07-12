@@ -25,7 +25,7 @@ namespace TransferMarketPlatform.WebApi.Controllers
         }
 
         [HttpGet("{id:Guid}")]
-        public async Task<ActionResult<PlayerDto>> GetById(
+        public async Task<ActionResult<UpdatePlayerDto>> GetById(
             Guid id,
             CancellationToken cancellationToken = default
         )

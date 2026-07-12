@@ -44,5 +44,13 @@ public class PlayerProfile : Profile
                 src.TransferCost
             ))
             .ForAllMembers(opt => opt.Ignore()); // Prevents validation errors for UpdatePlayerDto
+
+        CreateMap<Player, UpdatePlayerDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Nationality, opt => opt.MapFrom(src => src.Nationality))
+            .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.Age))
+            .ForMember(dest => dest.CurrentClub, opt => opt.MapFrom(src => src.CurrentClub))
+            .ForMember(dest => dest.TransferCost, opt => opt.MapFrom(src => src.TransferCost));
     }
 }
