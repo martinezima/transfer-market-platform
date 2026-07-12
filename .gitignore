@@ -30,6 +30,7 @@ artifacts/
 src/WebApi/transferMarketDemo.db
 src/WebApi/transferMarketDemo.db-shm
 src/WebApi/transferMarketDemo.db-wal
+src/coveragereport
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
