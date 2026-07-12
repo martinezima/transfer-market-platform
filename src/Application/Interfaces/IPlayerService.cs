@@ -6,7 +6,7 @@ public interface IPlayerService
 {
     Task<IEnumerable<PlayerDto>> GetAllAsync(CancellationToken cancellationToken = default);
 
-    Task<PlayerDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<UpdatePlayerDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
     Task<PlayerDto> CreateAsync(
         CreatePlayerDto playerDto,

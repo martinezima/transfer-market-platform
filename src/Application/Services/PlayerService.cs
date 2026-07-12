@@ -1,4 +1,3 @@
-using System.Linq;
 using AutoMapper;
 using Domain.Interfaces;
 using TransferMarketPlatform.Application.DTOs;
@@ -37,13 +36,13 @@ public class PlayerService : IPlayerService
         return Task.FromResult<IEnumerable<PlayerDto>>(players.ToList().AsEnumerable());
     }
 
-    public async Task<PlayerDto?> GetByIdAsync(
+    public async Task<UpdatePlayerDto?> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken = default
     )
     {
         var player = await _repository.GetById(id, cancellationToken);
-        return player is null ? null : _mapper.Map<Player, PlayerDto>(player);
+        return player is null ? null : _mapper.Map<Player, UpdatePlayerDto>(player);
     }
 
     public async Task<PlayerDto> CreateAsync(
