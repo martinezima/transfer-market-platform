@@ -18,7 +18,7 @@ public class UpdatePlayerValidatorTests
     {
         var playerDto = new UpdatePlayerDto
         {
-            Id = 1,
+            Id = Guid.NewGuid(),
             Name = "Cristiano Ronaldo",
             Nationality = Country.Portugal,
             Age = 38,
@@ -36,7 +36,7 @@ public class UpdatePlayerValidatorTests
     {
         var playerDto = new UpdatePlayerDto
         {
-            Id = 1,
+            Id = Guid.NewGuid(),
             Name = null,
             Nationality = Country.Portugal,
             Age = 38,

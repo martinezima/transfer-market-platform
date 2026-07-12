@@ -16,11 +16,14 @@ public class PlayerRepositoryTests
             .Options;
 
         await using var context = new TransferMarketDbContext(options);
+        var playerId1 = Guid.NewGuid();
+        var playerId2 = Guid.NewGuid();
+        var playerId3 = Guid.NewGuid();
 
         context.Players.AddRange(
             new Player
             {
-                Id = 1,
+                Id = playerId1,
                 Name = "Lionel Messi",
                 Nationality = Country.Argentina,
                 Age = 37,
@@ -29,7 +32,7 @@ public class PlayerRepositoryTests
             },
             new Player
             {
-                Id = 2,
+                Id = playerId2,
                 Name = "Vinicius Junior",
                 Nationality = Country.Brazil,
                 Age = 24,
@@ -38,7 +41,7 @@ public class PlayerRepositoryTests
             },
             new Player
             {
-                Id = 3,
+                Id = playerId3,
                 Name = "Kylian Mbappé",
                 Nationality = Country.France,
                 Age = 25,
@@ -56,9 +59,9 @@ public class PlayerRepositoryTests
 
         Assert.Equal(2, result.Count());
         // Assert.Equal(3, result.Count());
-        Assert.Contains(result, p => p.Id == 1 && p.Nationality == Country.Argentina);
-        // Assert.Contains(result, p => p.Id == 1 && p.Nationality == Country.Mexico);
-        Assert.Contains(result, p => p.Id == 2 && p.Nationality == Country.Brazil);
-        Assert.DoesNotContain(result, p => p.Id == 3);
+        Assert.Contains(result, p => p.Id == playerId1 && p.Nationality == Country.Argentina);
+        // Assert.Contains(result, p => p.Id == playerId1 && p.Nationality == Country.Mexico);
+        Assert.Contains(result, p => p.Id == playerId2 && p.Nationality == Country.Brazil);
+        Assert.DoesNotContain(result, p => p.Id == playerId3);
     }
 }

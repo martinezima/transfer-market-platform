@@ -60,7 +60,7 @@ public class UpdatePlayerValidator : AbstractValidator<UpdatePlayerDto>
 {
     public UpdatePlayerValidator()
     {
-        RuleFor(x => x.Id).GreaterThan(0).WithMessage("Invalid player ID");
+        RuleFor(x => x.Id).NotEqual(Guid.Empty).WithMessage("Player ID is required for update");
 
         RuleFor(x => x.Name)
             .NotEmpty()
@@ -111,8 +111,8 @@ public class BulkDeletePlayerValidator : AbstractValidator<BulkDeletePlayerDto>
             .NotEmpty()
             .NotNull()
             .WithMessage("Player IDs are required for bulk deletion")
-            .Must(ids => ids.All(id => id > 0))
-            .WithMessage("All player IDs must be greater than 0")
+            .Must(ids => ids.All(id => id != Guid.Empty))
+            .WithMessage("Player IDs cannot contain Guid.Empty")
             .Must(ids => ids.Distinct().Count() == ids.Count)
             .WithMessage("Duplicate player IDs are not allowed");
     }

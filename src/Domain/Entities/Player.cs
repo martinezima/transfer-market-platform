@@ -8,7 +8,7 @@ public class Player : AuditableEntity
     public Player() { }
 
     public Player(
-        int id,
+        Guid id,
         string? name,
         Country nationality,
         int age,
@@ -24,7 +24,7 @@ public class Player : AuditableEntity
         TransferCost = transferCost;
     }
 
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string? Name { get; set; }
 

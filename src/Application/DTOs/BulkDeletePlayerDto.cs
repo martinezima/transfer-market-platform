@@ -5,5 +5,5 @@ namespace TransferMarketPlatform.Application.DTOs;
 
 public class BulkDeletePlayerDto
 {
-    public List<int> PlayerIds { get; set; } = new List<int>();
+    public List<Guid> PlayerIds { get; set; } = new List<Guid>();
 }

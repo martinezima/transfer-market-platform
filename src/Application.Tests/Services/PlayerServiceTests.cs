@@ -40,7 +40,7 @@ public class PlayerServiceTests
     private class InMemoryPlayerRepository : IPlayerRepository
     {
         private readonly List<Player> _players = [];
-        private int _nextId = 1;
+        private Guid _nextId = Guid.NewGuid();
 
         public InMemoryPlayerRepository(IEnumerable<Player>? seed = null)
         {
@@ -49,12 +49,11 @@ public class PlayerServiceTests
                 foreach (var p in seed)
                 {
                     _players.Add(p);
-                    _nextId = Math.Max(_nextId, p.Id + 1);
                 }
             }
         }
 
-        public Task<Player?> GetById(int id, CancellationToken cancellationToken = default)
+        public Task<Player?> GetById(Guid id, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(_players.FirstOrDefault(p => p.Id == id));
         }
@@ -66,7 +65,7 @@ public class PlayerServiceTests
 
         public Task<Player> Create(Player entity, CancellationToken cancellationToken = default)
         {
-            entity.Id = _nextId++;
+            entity.Id = Guid.NewGuid();
             _players.Add(entity);
             return Task.FromResult(entity);
         }
@@ -82,14 +81,14 @@ public class PlayerServiceTests
             throw new KeyNotFoundException();
         }
 
-        public Task<bool> Delete(int id, CancellationToken cancellationToken = default)
+        public Task<bool> Delete(Guid id, CancellationToken cancellationToken = default)
         {
             var removed = _players.RemoveAll(p => p.Id == id) > 0;
             return Task.FromResult(removed);
         }
 
         public Task<int> BulkDeleteByIds(
-            IEnumerable<int> ids,
+            IEnumerable<Guid> ids,
             CancellationToken cancellationToken = default,
             string keyName = "Id"
         )
@@ -114,8 +113,8 @@ public class PlayerServiceTests
     {
         var seed = new[]
         {
-            new Player(1, "A", Country.Portugal, 30, "ClubA", 100m),
-            new Player(2, "B", Country.France, 22, "ClubB", 200m),
+            new Player(Guid.NewGuid(), "A", Country.Portugal, 30, "ClubA", 100m),
+            new Player(Guid.NewGuid(), "B", Country.France, 22, "ClubB", 200m),
         };
         var repo = new InMemoryPlayerRepository(seed);
         var mapper = CreateMapper();
@@ -131,12 +130,13 @@ public class PlayerServiceTests
     [Fact]
     public async Task GetByIdAsync_ReturnsPlayer_WhenExists()
     {
-        var seed = new[] { new Player(1, "A", Country.Portugal, 30, "ClubA", 100m) };
+        var id = Guid.NewGuid();
+        var seed = new[] { new Player(id, "A", Country.Portugal, 30, "ClubA", 100m) };
         var repo = new InMemoryPlayerRepository(seed);
         var mapper = CreateMapper();
         var svc = CreateService(repo, mapper);
 
-        var result = await svc.GetByIdAsync(1);
+        var result = await svc.GetByIdAsync(id);
 
         Assert.NotNull(result);
         Assert.Equal("A", result!.Name);
@@ -168,14 +168,15 @@ public class PlayerServiceTests
     [Fact]
     public async Task UpdateAsync_UpdatesExistingPlayer()
     {
-        var seed = new[] { new Player(1, "Old", Country.Portugal, 30, "OldClub", 100m) };
+        var id = Guid.NewGuid();
+        var seed = new[] { new Player(id, "Old", Country.Portugal, 30, "OldClub", 100m) };
         var repo = new InMemoryPlayerRepository(seed);
         var mapper = CreateMapper();
         var svc = CreateService(repo, mapper);
 
         var updateDto = new UpdatePlayerDto
         {
-            Id = 1,
+            Id = id,
             Name = "New",
             Nationality = Country.Brazil,
             Age = 31,
@@ -183,7 +184,7 @@ public class PlayerServiceTests
             TransferCost = 900000m,
         };
 
-        var updated = await svc.UpdateAsync(1, updateDto);
+        var updated = await svc.UpdateAsync(id, updateDto);
 
         Assert.NotNull(updated);
         Assert.Equal("New", updated!.Name);
@@ -193,12 +194,13 @@ public class PlayerServiceTests
     [Fact]
     public async Task DeleteAsync_DeletesPlayer()
     {
-        var seed = new[] { new Player(1, "ToDelete", Country.Portugal, 29, "Club", 50m) };
+        var id = Guid.NewGuid();
+        var seed = new[] { new Player(id, "ToDelete", Country.Portugal, 29, "Club", 50m) };
         var repo = new InMemoryPlayerRepository(seed);
         var mapper = CreateMapper();
         var svc = CreateService(repo, mapper);
 
-        var ok = await svc.DeleteAsync(1);
+        var ok = await svc.DeleteAsync(id);
 
         Assert.True(ok);
     }
@@ -206,16 +208,18 @@ public class PlayerServiceTests
     [Fact]
     public async Task BulkDeleteAsync_DeletesPlayers()
     {
+        var id1 = Guid.NewGuid();
+        var id2 = Guid.NewGuid();
         var seed = new[]
         {
-            new Player(1, "A", Country.Portugal, 30, "ClubA", 100m),
-            new Player(2, "B", Country.France, 22, "ClubB", 200m),
+            new Player(id1, "A", Country.Portugal, 30, "ClubA", 100m),
+            new Player(id2, "B", Country.France, 22, "ClubB", 200m),
         };
         var repo = new InMemoryPlayerRepository(seed);
         var mapper = CreateMapper();
         var svc = CreateService(repo, mapper);
 
-        var ok = await svc.BulkDeleteAsync(new[] { 1, 2 });
+        var ok = await svc.BulkDeleteAsync(new[] { id1, id2 });
 
         Assert.True(ok);
     }

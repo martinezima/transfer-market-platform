@@ -19,7 +19,7 @@ public class BulkDeletePlayerTests
     {
         var dto = new BulkDeletePlayerDto
         {
-            PlayerIds = new List<int> { 1, 2, 3 },
+            PlayerIds = new List<Guid> { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() },
         };
 
         var result = _validator.Validate(dto);
@@ -30,10 +30,11 @@ public class BulkDeletePlayerTests
     [Fact]
     public void Validate_InvalidIds_ReturnsTwoErrors()
     {
+        var repeatedId = Guid.NewGuid();
         var dto = new BulkDeletePlayerDto
         {
-            // contains an invalid id (0) and a duplicate (2)
-            PlayerIds = new List<int> { 1, 0, 2, 2 },
+            // contains an invalid id (Guid.Empty) and a repeated id (repeatedId)
+            PlayerIds = new List<Guid> { repeatedId, Guid.Empty, Guid.NewGuid(), repeatedId },
         };
 
         var result = _validator.Validate(dto);
