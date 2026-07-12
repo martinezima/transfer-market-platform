@@ -27,6 +27,9 @@ bld/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+src/WebApi/transferMarketDemo.db
+src/WebApi/transferMarketDemo.db-shm
+src/WebApi/transferMarketDemo.db-wal
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
