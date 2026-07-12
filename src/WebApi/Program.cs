@@ -22,6 +22,7 @@ builder.Services.AddValidatorsFromAssembly(typeof(CreatePlayerValidator).Assembl
 
 //Register Application Services
 builder.Services.AddScoped<IPlayerService, PlayerService>();
+builder.Services.AddScoped<INationalityService, NationalityService>();
 
 // Register Infrastructure services
 var useSqliteDemo = builder.Configuration.GetValue<bool>("UseSqliteDemo");
